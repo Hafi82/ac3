@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Excellence Graphics - Customer Account Management System">
+    <title>Excellence Graphics - Account Management</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --danger-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --success-color: #00f2fe;
+            --danger-color: #fa709a;
+            --warning-color: #ffd93d;
+
+            --bg-primary: #0f0f23;
+            --bg-secondary: #1a1a2e;
+            --bg-tertiary: #16213e;
+            --text-primary: #ffffff;
+            --text-secondary: #b8b8d1;
+            --text-muted: #6b7280;
+
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+
+            --font-primary: 'Inter', sans-serif;
+            --font-display: 'Outfit', sans-serif;
+
+            --transition-normal: 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(0, 242, 254, 0.1) 0%, transparent 50%);
+            z-index: -1;
+            animation: backgroundPulse 15s ease-in-out infinite;
+        }
+
+        @keyframes backgroundPulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
+        }
+
+        /* Navigation */
+        .navigation {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .brand-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .brand-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 700;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--radius-md);
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary-gradient);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--glass-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
+        }
+
+        .btn-danger {
+            background: var(--danger-gradient);
+            color: white;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.875rem 1rem 0.875rem 3rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-family: var(--font-primary);
+            font-size: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.875rem 1.25rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            color: var(--text-secondary);
+            font-family: var(--font-display);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-primary);
+        }
+
+        .filter-btn.active {
+            background: var(--primary-gradient);
+            border-color: transparent;
+            color: white;
+        }
+
+        .filter-count {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.125rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+
+        /* Customer Grid */
+        .customer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .customer-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            transition: all var(--transition-normal);
+        }
+
+        .customer-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.5);
+        }
+
+        .customer-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .customer-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .customer-name {
+            font-size: 1.125rem;
+            font-weight: 600;
+            font-family: var(--font-display);
+        }
+
+        .customer-address {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 1rem;
+        }
+
+        .badge-success {
+            background: rgba(0, 242, 254, 0.2);
+            color: var(--success-color);
+            border: 1px solid rgba(0, 242, 254, 0.3);
+        }
+
+        .badge-warning {
+            background: rgba(255, 217, 61, 0.2);
+            color: var(--warning-color);
+            border: 1px solid rgba(255, 217, 61, 0.3);
+        }
+
+        .badge-danger {
+            background: rgba(250, 112, 154, 0.2);
+            color: var(--danger-color);
+            border: 1px solid rgba(250, 112, 154, 0.3);
+        }
+
+        .customer-actions {
+            display: flex;
+            gap: 0.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 0.625rem;
+            border: 1px solid var(--glass-border);
+            background: var(--glass-bg);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            color: var(--text-secondary);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 1rem;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-secondary);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .modal-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1.5rem;
+            padding: 0.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-family: var(--font-primary);
+            font-size: 1rem;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea.input-field {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        select.input-field {
+            cursor: pointer;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .form-actions .btn {
+            flex: 1;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .empty-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-description {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .customer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navigation">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <div>
+                    <h1 class="brand-title">Excellence Graphics</h1>
+                    <p class="brand-subtitle">Account Management</p>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="header">
+            <div>
+                <h2 class="section-title">Customer Management</h2>
+                <p class="section-subtitle">Manage your customers and track payment status</p>
+            </div>
+            <button class="btn btn-primary" onclick="openAddModal()">
+                ➕ Add Customer
+            </button>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search customers..."
+                    oninput="filterCustomers()">
+            </div>
+
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">
+                    All <span class="filter-count" id="count-all">0</span>
+                </button>
+                <button class="filter-btn" data-filter="full" onclick="setFilter('full')">
+                    Full Payment <span class="filter-count" id="count-full">0</span>
+                </button>
+                <button class="filter-btn" data-filter="partial" onclick="setFilter('partial')">
+                    Partial Payment <span class="filter-count" id="count-partial">0</span>
+                </button>
+                <button class="filter-btn" data-filter="none" onclick="setFilter('none')">
+                    No Payment <span class="filter-count" id="count-none">0</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Customer Grid -->
+        <div id="customerGrid" class="customer-grid"></div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="empty-state hidden">
+            <h3 class="empty-title">No customers yet</h3>
+            <p class="empty-description">Get started by adding your first customer</p>
+            <button class="btn btn-primary" onclick="openAddModal()">
+                ➕ Add Your First Customer
+            </button>
+        </div>
+    </main>
+
+    <!-- Add/Edit Customer Modal -->
+    <div id="customerModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Add New Customer</h2>
+                <button class="modal-close" onclick="closeModal()">✕</button>
+            </div>
+
+            <form id="customerForm" onsubmit="saveCustomer(event)">
+                <div class="input-group">
+                    <label class="input-label" for="customerName">Customer Name *</label>
+                    <input type="text" class="input-field" id="customerName" placeholder="Enter customer name" required>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label" for="customerAddress">Address *</label>
+                    <textarea class="input-field" id="customerAddress" placeholder="Enter customer address"
+                        required></textarea>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label" for="paymentStatus">Payment Status</label>
+                    <select class="input-field" id="paymentStatus">
+                        <option value="none">No Payment</option>
+                        <option value="partial">Partial Payment</option>
+                        <option value="full">Full Payment</option>
+                    </select>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        ✓ Save Customer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Data storage
+        let customers = [];
+        let currentFilter = 'all';
+        let editingCustomerId = null;
+
+        // Load customers from localStorage
+        function loadCustomers() {
+            const saved = localStorage.getItem('excellence_graphics_customers');
+            if (saved) {
+                customers = JSON.parse(saved);
+            }
+            renderCustomers();
+        }
+
+        // Save customers to localStorage
+        function saveToStorage() {
+            localStorage.setItem('excellence_graphics_customers', JSON.stringify(customers));
+        }
+
+        // Open add modal
+        function openAddModal() {
+            editingCustomerId = null;
+            document.getElementById('modalTitle').textContent = 'Add New Customer';
+            document.getElementById('customerForm').reset();
+            document.getElementById('customerModal').classList.add('active');
+        }
+
+        // Open edit modal
+        function openEditModal(id) {
+            const customer = customers.find(c => c.id === id);
+            if (!customer) return;
+
+            editingCustomerId = id;
+            document.getElementById('modalTitle').textContent = 'Edit Customer';
+            document.getElementById('customerName').value = customer.name;
+            document.getElementById('customerAddress').value = customer.address;
+            document.getElementById('paymentStatus').value = customer.paymentStatus;
+            document.getElementById('customerModal').classList.add('active');
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('customerModal').classList.remove('active');
+            document.getElementById('customerForm').reset();
+            editingCustomerId = null;
+        }
+
+        // Save customer
+        function saveCustomer(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('customerName').value.trim();
+            const address = document.getElementById('customerAddress').value.trim();
+            const paymentStatus = document.getElementById('paymentStatus').value;
+
+            if (!name || !address) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            if (editingCustomerId) {
+                // Update existing customer
+                const index = customers.findIndex(c => c.id === editingCustomerId);
+                if (index !== -1) {
+                    customers[index] = {
+                        ...customers[index],
+                        name,
+                        address,
+                        paymentStatus
+                    };
+                }
+            } else {
+                // Add new customer
+                const newCustomer = {
+                    id: Date.now().toString(),
+                    name,
+                    address,
+                    paymentStatus,
+                    createdAt: new Date().toISOString()
+                };
+                customers.push(newCustomer);
+            }
+
+            saveToStorage();
+            renderCustomers();
+            closeModal();
+        }
+
+        // Delete customer
+        function deleteCustomer(id) {
+            if (confirm('Are you sure you want to delete this customer?')) {
+                customers = customers.filter(c => c.id !== id);
+                saveToStorage();
+                renderCustomers();
+            }
+        }
+
+        // View customer
+        function viewCustomer(id) {
+            const customer = customers.find(c => c.id === id);
+            if (!customer) return;
+
+            const statusText = {
+                'full': 'Full Payment',
+                'partial': 'Partial Payment',
+                'none': 'No Payment'
+            }[customer.paymentStatus];
+
+            alert(`Customer Details:\n\nName: ${customer.name}\nAddress: ${customer.address}\nPayment Status: ${statusText}\nCustomer ID: ${customer.id}\nCreated: ${new Date(customer.createdAt).toLocaleString()}`);
+        }
+
+        // Set filter
+        function setFilter(filter) {
+            currentFilter = filter;
+
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-filter="${filter}"]`).classList.add('active');
+
+            renderCustomers();
+        }
+
+        // Filter customers
+        function filterCustomers() {
+            renderCustomers();
+        }
+
+        // Get badge HTML
+        function getBadgeHTML(status) {
+            const badges = {
+                'full': '<span class="badge badge-success">Full Payment</span>',
+                'partial': '<span class="badge badge-warning">Partial Payment</span>',
+                'none': '<span class="badge badge-danger">No Payment</span>'
+            };
+            return badges[status] || badges['none'];
+        }
+
+        // Render customers
+        function renderCustomers() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+
+            // Filter customers
+            let filtered = customers.filter(customer => {
+                const matchesFilter = currentFilter === 'all' || customer.paymentStatus === currentFilter;
+                const matchesSearch = customer.name.toLowerCase().includes(searchTerm) ||
+                    customer.address.toLowerCase().includes(searchTerm);
+                return matchesFilter && matchesSearch;
+            });
+
+            // Update counts
+            document.getElementById('count-all').textContent = customers.length;
+            document.getElementById('count-full').textContent = customers.filter(c => c.paymentStatus === 'full').length;
+            document.getElementById('count-partial').textContent = customers.filter(c => c.paymentStatus === 'partial').length;
+            document.getElementById('count-none').textContent = customers.filter(c => c.paymentStatus === 'none').length;
+
+            const grid = document.getElementById('customerGrid');
+            const emptyState = document.getElementById('emptyState');
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                emptyState.classList.remove('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+                grid.innerHTML = filtered.map(customer => `
+                    <div class="customer-card">
+                        <div class="customer-header">
+                            <div class="customer-avatar">${customer.name.charAt(0).toUpperCase()}</div>
+                            <div>
+                                <div class="customer-name">${customer.name}</div>
+                                ${getBadgeHTML(customer.paymentStatus)}
+                            </div>
+                        </div>
+                        <div class="customer-address">${customer.address}</div>
+                        <div class="customer-actions">
+                            <button class="action-btn" onclick="viewCustomer('${customer.id}')" title="View">👁️</button>
+                            <button class="action-btn" onclick="openEditModal('${customer.id}')" title="Edit">✏️</button>
+                            <button class="action-btn" onclick="deleteCustomer('${customer.id}')" title="Delete">🗑️</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Close modal on outside click
+        document.getElementById('customerModal').addEventListener('click', function (e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Initialize
+        loadCustomers();
+    </script>
+</body>
+
+</html>
